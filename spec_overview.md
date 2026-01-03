@@ -1,20 +1,20 @@
 # 1. 개요 (Overview)
 
 ## 1.1 목적
-[cite_start]본 문서는 생명과학 연구원들이 PCR 프라이머(Primer)를 설계할 때 겪는 비효율을 해결하기 위한 웹 솔루션 **PrimerFlow**의 기술 사양을 정의한다. [cite: 252]
-[cite_start]본 시스템은 10,000bp 이상의 대용량 유전자 서열 데이터를 백엔드에서 분석하고, 프론트엔드(PrimeFlow Engine)에서 웹 브라우저 지연 없이 **60fps로 시각화**하는 것을 목적으로 한다. [cite: 253]
+본 문서는 생명과학 연구원들이 PCR 프라이머(Primer)를 설계할 때 겪는 비효율을 해결하기 위한 웹 솔루션 **PrimerFlow**의 기술 사양을 정의한다.
+본 시스템은 10,000bp 이상의 대용량 유전자 서열 데이터를 백엔드에서 분석하고, 프론트엔드(PrimeFlow Engine)에서 웹 브라우저 지연 없이 **60fps로 시각화**하는 것을 목적으로 한다.
 
 ## 1.2 범위 (Scope)
 
 ### 포함 (In-Scope)
-* **Frontend:** Next.js 16 기반의 웹 애플리케이션 구현. [cite_start]HTML5 Canvas API를 활용한 Custom Rendering Engine, UI 컴포넌트, 전역 상태 관리(Zustand). [cite: 256]
-* **Backend:** FastAPI 기반의 REST API 서버. [cite_start]유전자 데이터 분석 및 PCR 프라이머 설계 알고리즘 제공. [cite: 257]
-* [cite_start]**Algorithm:** View Culling(이분 탐색), Auto Layout(Greedy), 좌표 변환(Matrix Transformation). [cite: 258]
-* [cite_start]**Infra:** Vercel 배포(FE) 및 로컬 개발 환경 구성. [cite: 259]
+* **Frontend:** Next.js 16 기반의 웹 애플리케이션 구현. HTML5 Canvas API를 활용한 Custom Rendering Engine, UI 컴포넌트, 전역 상태 관리(Zustand).
+* **Backend:** FastAPI 기반의 REST API 서버. 유전자 데이터 분석 및 PCR 프라이머 설계 알고리즘 제공.
+* **Algorithm:** View Culling(이분 탐색), Auto Layout(Greedy), 좌표 변환(Matrix Transformation). 
+* **Infra:** Vercel 배포(FE) 및 로컬 개발 환경 구성.
 
 ### 제외 (Out-Scope)
-* [cite_start]사용자 인증/인가 시스템 (입력 정보에 명시되지 않음, TBD). [cite: 261]
-* [cite_start]실제 실험 장비와의 하드웨어 연동. [cite: 262]
+* 사용자 인증/인가 시스템 (입력 정보에 명시되지 않음, TBD).
+* 실제 실험 장비와의 하드웨어 연동.
 
 ## 1.3 용어 정의 (Terminology)
 
@@ -33,8 +33,8 @@
 # 2. 이해관계자 및 권한
 
 ## 2.1 사용자 유형
-* [cite_start]**Researcher (연구원/사용자):** 서열을 입력하고 프라이머 후보를 조회/선택/내보내기 한다. [cite: 267]
-* [cite_start]**Developer (개발자):** 디버그/성능 측정/렌더링 검증을 수행한다. [cite: 268]
+* **Researcher (연구원/사용자):** 서열을 입력하고 프라이머 후보를 조회/선택/내보내기 한다.
+* **Developer (개발자):** 디버그/성능 측정/렌더링 검증을 수행한다.
 
 ## 2.2 권한 매트릭스
 | 역할 | 가능 (Allowed) | 불가 (Disallowed) |

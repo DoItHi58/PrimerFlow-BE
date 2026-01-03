@@ -45,14 +45,15 @@ interface PrimerDesignResponse {
 ## 5.2 API 목록 (API Endpoints)
 Note: 백엔드는 FastAPI를 사용하며 OpenAPI(/docs)를 제공합니다. 정확한 경로는 개발 착수 시 확정(TBD)됩니다.
 1) 프라이머 설계 요청 (Design Primers)
-Endpoint: POST /api/design (예상, TBD)
-Request:서열 데이터 (Sequence String)
+- Endpoint: POST /api/design (예상, TBD)
+- Request:서열 데이터 (Sequence String)
 설계 파라미터 (TBD: Target Product Size, Tm Range 등)
-Response: PrimerDesignResponseStatus Codes & Errors:
-200 OK: 성공
-400 Bad Request: 입력 검증 실패 (잘못된 서열 문자, 파라미터 오류)
-413 Payload Too Large: 입력 서열이 너무 큼 (TBD: 상한선 정책)
-500 Internal Server Error: 서버 내부 알고리즘 오류
+- Response: PrimerDesignResponse
+- Status Codes & Errors:
+  - 200 OK: 성공
+  - 400 Bad Request: 입력 검증 실패 (잘못된 서열 문자, 파라미터 오류)
+  - 413 Payload Too Large: 입력 서열이 너무 큼 (TBD: 상한선 정책)
+  - 500 Internal Server Error: 서버 내부 알고리즘 오류
 
 2) 헬스 체크 (Health Check)
 - Endpoint: GET / 또는 GET /health (TBD)
@@ -61,20 +62,21 @@ Response: PrimerDesignResponseStatus Codes & Errors:
 ## 5.3 상태 및 이벤트 관리 (State & Events)
 프론트엔드(Zustand)에서 관리해야 할 전역 상태와 주요 이벤트 흐름입니다.
 
-#### 1) 전역 상태 (Global State - Zustand)상태 변수
-타입설명
-viewportStartBpnumber현재 뷰포트 시작 위치 (1-based 권장)
-viewportEndBpnumber현재 뷰포트 종료 위치
-zoomLevelnumber캔버스 확대 배율
-selectedPrimerIdstring사용자가 클릭하여 선택한 프라이머 
-IDhoveredPrimerIdstring(TBD) 마우스 오버 중인 프라이머 
-IDfilterSortStateobject(TBD) 후보 리스트 필터/정렬 조건
-#### 2) 주요 이벤트 (Key Events)데이터 흐름과 UI 반응을 트리거하는 핵심 이벤트입니다.
-데이터 처리:SEQUENCE_PARSED: FASTA 파싱 완료 시
-DESIGN_REQUESTED: 설계 요청 시작 (로딩 UI 표시)
-DESIGN_SUCCEEDED: 결과 수신 완료 (캔버스 렌더링 시작)
-DESIGN_FAILED: 요청 실패 (에러 배너 표시)
-상호작용:
-VIEWPORT_CHANGED: 줌/팬 동작으로 보고 있는 구간 변경 시
-PRIMER_SELECTED: 프라이머 클릭 시 (상세 패널 표시)
-PRIMER_DESELECTED: 빈 공간 클릭 또는 선택 해제 시
+#### 1. 전역 상태 (Global State - Zustand) - 상태 변수
+#### 타입설명
+* viewportStartBpnumber: 현재 뷰포트 시작 위치 (1-based 권장)
+* viewportEndBpnumber: 현재 뷰포트 종료 위치
+* zoomLevelnumber: 캔버스 확대 배율
+* selectedPrimerIdstring: 사용자가 클릭하여 선택한 프라이머 
+* IDhoveredPrimerIdstring(TBD): 마우스 오버 중인 프라이머 
+* IDfilterSortStateobject(TBD): 후보 리스트 필터/정렬 조건
+#### 2. 주요 이벤트 (Key Events) - 데이터 흐름과 UI 반응을 트리거하는 핵심 이벤트
+#### 데이터 처리
+* SEQUENCE_PARSED: FASTA 파싱 완료 시
+* DESIGN_REQUESTED: 설계 요청 시작 (로딩 UI 표시)
+* DESIGN_SUCCEEDED: 결과 수신 완료 (캔버스 렌더링 시작)
+* DESIGN_FAILED: 요청 실패 (에러 배너 표시)
+#### 상호작용
+* VIEWPORT_CHANGED: 줌/팬 동작으로 보고 있는 구간 변경 시
+* PRIMER_SELECTED: 프라이머 클릭 시 (상세 패널 표시)
+* PRIMER_DESELECTED: 빈 공간 클릭 또는 선택 해제 시
