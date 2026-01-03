@@ -6,7 +6,7 @@
 
 ## 2. 프롬프트 (User Input)
 
-\`\`\`text
+```text
 너는 technique specification writer다.
 목표: PCR primer design을 기능으로 하는 Seqlab의 software specification를 작성한다.
 독자: 생물학 비전공인 개발자가 이 문서만으로 개발·테스트·출시 판단을 할 수 있어야 한다.
@@ -178,7 +178,7 @@ ReDoc 문서: http://localhost:8000/redoc
 9.2 외부 의존성
 
 10. 확인 질문(최대 7개)
-\`\`\`
+```
 
 ## 3. AI 응답 요약 (AI Output)
 
