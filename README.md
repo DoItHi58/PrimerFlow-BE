@@ -103,3 +103,10 @@ uvicorn main:app --reload
 - **AI 활용**
     - Copilot 리뷰 한국어 지침 추가 : `.github/copilot-instructions.md` 생성
 
+### Week 4 (26.1.12 - 1.18)
+- **작업 내역** : [4주차 Commit](https://github.com/Seq-Lab/PrimerFlow-BE/commit/0f66dc4ef55129c4381c34d9d081c29c09b1e388)
+    - `PrimerDesigner.py` 구현: 핵심 PCR 프라이머 설계 로직 첫 번째 버전 추가
+    - 블랙박스 테스트 케이스 설계(EP, BVA, CE) 및 파일 추가
+    - 테스트 케이스 시나리오 초안 완성 (지속적 보완 예정)
+- **AI 활용**
+    - 블랙박스 테스트 케이스 설계 : `docs/prompts/4주차/test_design_prompt.md` 참고
