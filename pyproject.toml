@@ -1,0 +1,22 @@
+[tool.ruff]
+target-version = "py311"
+
+[tool.ruff.lint]
+# 규칙을 늘리고 싶으면 E/W/I 등으로 확장하면 됩니다.
+select = ["F", "I"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]
+
+[tool.pyright]
+pythonVersion = "3.11"
+typeCheckingMode = "basic"
+
+# 외부 라이브러리 stub 미제공으로 인한 잡음을 줄이기 위한 기본값
+reportMissingImports = "none"
+reportMissingTypeStubs = "none"
+
+# 프로젝트 초기에는 엄격한 unknown 계열 리포트를 끄고 점진적으로 강화하는 편이 보편적입니다.
+reportUnknownMemberType = "none"
+reportUnknownVariableType = "none"
+reportUnknownParameterType = "none"

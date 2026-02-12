@@ -1,15 +1,17 @@
-from pydantic import BaseModel
-from typing import Optional, Literal
-from schemas.common import Range, PrimerTm, EndMismatchStrictness, SearchRange
+from typing import Literal, Optional
 
-# 1
+from pydantic import BaseModel
+
+from app.schemas.common import EndMismatchStrictness, PrimerTm, Range, SearchRange
+
+
 class BasicInput(BaseModel):
     templateSequence: str
     targetOrganism: str
     productSize: Range
     primerTm: PrimerTm
 
-# 2
+
 class PrimerProperties(BaseModel):
     gcContent: Range
     maxTmDifference: float
@@ -17,7 +19,7 @@ class PrimerProperties(BaseModel):
     maxPolyX: int
     concentration: float
 
-# 3
+
 class PrimerSpecificity(BaseModel):
     checkEnabled: bool
     spliceVariantHandling: bool
@@ -25,13 +27,14 @@ class PrimerSpecificity(BaseModel):
     endMismatchStrictness: Optional[EndMismatchStrictness] = None
     misprimingLibrary: bool
 
-# 4
+
 class PrimerPosition(BaseModel):
     searchRange: SearchRange
     exonJunctionSpan: Literal["none", "flanking", "spanning"]
     intronInclusion: bool
     intronSize: Optional[Range] = None
     restrictionEnzymes: list[str]
+
 
 class PrimerDesignRequest(BaseModel):
     basic: BasicInput

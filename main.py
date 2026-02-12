@@ -1,22 +1,9 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from api.v1.endpoints.health import router as health_router
-from api.v1.endpoints.design import router as design_router
+"""호환용 엔트리포인트.
 
-app = FastAPI(title="PrimerFlow API", version="0.1.0")
+`app.main:app`을 재노출합니다.
+"""
 
-# CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-    ],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+from app.main import app
 
-app.include_router(health_router)
-app.include_router(design_router)
+__all__ = ["app"]
 
