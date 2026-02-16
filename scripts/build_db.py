@@ -1,7 +1,6 @@
 import sqlite3
 import gzip
 import os
-import sys
 
 # ---------------------------------------------------------
 # 1. 경로 및 설정
