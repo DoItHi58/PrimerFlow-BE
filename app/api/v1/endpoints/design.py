@@ -1,9 +1,10 @@
-from datetime import datetime, timezone
 import time
-from fastapi import APIRouter
-from fastapi import status, HTTPException
-from schemas.request import PrimerDesignRequest
-from schemas.response import PrimerDesignResponse
+from datetime import datetime, timezone
+
+from fastapi import APIRouter, status
+
+from app.schemas.request import PrimerDesignRequest
+from app.schemas.response import PrimerDesignResponse
 
 router = APIRouter()
 
@@ -46,9 +47,5 @@ async def design(request: PrimerDesignRequest) -> PrimerDesignResponse:
 
     response["meta"]["timestamp"] = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
     response["meta"]["execution_time_ms"] = int((time.perf_counter() - started) * 1000)
-    
-    return response
-    
 
-
-    
+    return PrimerDesignResponse(**response)

@@ -9,6 +9,16 @@ __pycache__/
 .pytest_cache/
 .mypy_cache/
 .cache/
+.ruff_cache/
+.pyright/
+
+build/
+dist/
+*.egg-info/
+
+.coverage
+htmlcov/
+coverage.xml
 
 .vscode/
 .idea/
@@ -19,3 +29,5 @@ node_modules/
 npm-debug.log*
 yarn-error.log
 pnpm-debug.log
+
+*.log

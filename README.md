@@ -10,12 +10,13 @@
 
 ```text
 PrimerFlow-BE/
-├─ api/
-│  ├─ deps.py
-│  └─ v1/
-│     └─ endpoints/        # 엔드포인트 모음
-├─ schemas/                # Pydantic 모델 모음
-├─ algorithms/             # 알고리즘 모음
+├─ app/
+│  ├─ api/
+│  │  ├─ deps.py
+│  │  └─ v1/
+│  │     └─ endpoints/     # 엔드포인트 모음
+│  ├─ schemas/             # Pydantic 모델 모음
+│  └─ algorithms/          # 알고리즘 모음
 ├─ docs/                   # 협업 가이드, Spec 문서 모음
 │  └─ prompts/
 │  └─ strategy/
@@ -52,7 +53,13 @@ pip install -r requirements.txt
 ### 3. 개발 서버 실행
 
 ```powershell
-uvicorn main:app --reload
+uvicorn app.main:app --reload
+```
+
+### 4. 테스트 실행
+
+```powershell
+python -m pytest -q
 ```
 
 - 기본 엔드포인트: http://localhost:8000/
@@ -60,7 +67,7 @@ uvicorn main:app --reload
 - ReDoc 문서: http://localhost:8000/redoc
 
 
-### 4. Commit convention & commitlint
+### 5. Commit convention & commitlint
 
 - 이 레포는 commitlint/husky를 사용합니다. 클론 후 한 번만 실행:
   - `npm install`
