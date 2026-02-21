@@ -75,7 +75,9 @@ def parse_gff3(filename):
 
 def parse_vcf(filename):
     path = os.path.join(RAW_DATA_DIR, filename)
-    if not os.path.exists(path): return []
+    if not os.path.exists(path):
+        print(f"⚠️ SNP VCF 파일을 찾을 수 없습니다: {path}")
+        return []
     print(f"📖 SNP 파싱 시작: {filename}")
     data = []
     open_func = gzip.open if filename.endswith('.gz') else open
