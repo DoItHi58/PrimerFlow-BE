@@ -117,7 +117,7 @@ CREATE INDEX idx_rsite_loc ON restriction_site(chrom, start, end);
 데이터 파싱 및 유전체 스캔을 위해 아래 라이브러리가 필요합니다.
 
 ```bash
-pip install biopython pysam numpy
+pip install numpy pysam
 ```
 
 ### 5.3. 데이터베이스 빌드 프로세스 (Build Steps)
