@@ -57,12 +57,50 @@ def _download_google_drive(url, dest_path):
     url = urllib.parse.urlunparse(parsed._replace(query=new_query))
     _download_file(url, dest_path)
 
+
+def _download_any(url, dest_path):
+    if "drive.google.com" in url:
+        _download_google_drive(url, dest_path)
+    else:
+        _download_file(url, dest_path)
+
+
+def _download_if_missing(url, dest_path, label):
+    if os.path.exists(dest_path):
+        print(f"{label} 파일이 이미 존재합니다. 스킵: {dest_path}")
+        return
+    if not url:
+        return
+    _ensure_dir(os.path.dirname(dest_path))
+    print(f"{label} 다운로드 시작: {url}")
+    _download_any(url, dest_path)
+    if not os.path.exists(dest_path):
+        print(f"{label} 다운로드 실패: 파일이 생성되지 않았습니다.")
+        sys.exit(1)
+    print(f"{label} 다운로드 완료: {dest_path}")
+
+
+def _validate_bgzip_sidecars(genome_path):
+    if not genome_path.endswith(".gz"):
+        return
+    fai_path = f"{genome_path}.fai"
+    gzi_path = f"{genome_path}.gzi"
+    missing = [path for path in (fai_path, gzi_path) if not os.path.exists(path)]
+    if missing:
+        print("FASTA 인덱스 파일이 누락되었습니다.")
+        print("- GENOME_PATH가 .gz일 때는 bgzip FASTA + .fai + .gzi가 모두 필요합니다.")
+        print(f"- 누락 파일: {', '.join(missing)}")
+        print("- 해결: GENOME_FAI_URL / GENOME_GZI_URL 환경변수를 설정하거나 파일을 사전에 배치하세요.")
+        sys.exit(1)
+
 def main():
     db_url = _env("DB_URL")
     db_path = _env("DB_PATH", DEFAULT_DB_PATH)
     db_dir = os.path.dirname(db_path)
     genome_url = _env("GENOME_URL")
     genome_path = _env("GENOME_PATH", DEFAULT_GENOME_PATH)
+    genome_fai_url = _env("GENOME_FAI_URL")
+    genome_gzi_url = _env("GENOME_GZI_URL")
     genome_dir = os.path.dirname(genome_path)
 
     if not db_url:
@@ -74,10 +112,7 @@ def main():
     else:
         _ensure_dir(db_dir)
         print(f"DB 다운로드 시작: {db_url}")
-        if "drive.google.com" in db_url:
-            _download_google_drive(db_url, db_path)
-        else:
-            _download_file(db_url, db_path)
+        _download_any(db_url, db_path)
         if not os.path.exists(db_path):
             print("DB 다운로드 실패: 파일이 생성되지 않았습니다.")
             sys.exit(1)
@@ -89,16 +124,18 @@ def main():
         else:
             _ensure_dir(genome_dir)
             print(f"FASTA 다운로드 시작: {genome_url}")
-            if "drive.google.com" in genome_url:
-                _download_google_drive(genome_url, genome_path)
-            else:
-                _download_file(genome_url, genome_path)
+            _download_any(genome_url, genome_path)
             if not os.path.exists(genome_path):
                 print("FASTA 다운로드 실패: 파일이 생성되지 않았습니다.")
                 sys.exit(1)
             print(f"FASTA 다운로드 완료: {genome_path}")
     else:
         print("GENOME_URL 환경변수가 없습니다. FASTA 다운로드를 건너뜁니다.")
+
+    if os.path.exists(genome_path) and genome_path.endswith(".gz"):
+        _download_if_missing(genome_fai_url, f"{genome_path}.fai", "FAI")
+        _download_if_missing(genome_gzi_url, f"{genome_path}.gzi", "GZI")
+        _validate_bgzip_sidecars(genome_path)
 
 if __name__ == "__main__":
     main()
