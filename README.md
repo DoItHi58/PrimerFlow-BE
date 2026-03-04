@@ -3,25 +3,32 @@
 > **High-Performance PCR Primer Design & Visualization Platform**
 
 ## 프로젝트 개요
-**PrimeFlow**는 생명과학 연구원들이 PCR 프라이머를 설계할 때 겪는 비효율을 해결하기 위한 웹 솔루션입니다.
+**PrimerFlow**는 생명과학 연구원들이 PCR 프라이머를 설계할 때 겪는 비효율을 해결하기 위한 웹 솔루션입니다.
 
 
 ## 프로젝트 구조
 
 ```text
 PrimerFlow-BE/
-├─ app/
+├─ .github/               # GitHub 워크플로우 설정
+├─ .husky/                
+├─ app/                   # FastAPI 애플리케이션 코드
+│  ├─ main.py
 │  ├─ api/
-│  │  ├─ deps.py
 │  │  └─ v1/
-│  │     └─ endpoints/     # 엔드포인트 모음
-│  ├─ schemas/             # Pydantic 모델 모음
-│  └─ algorithms/          # 알고리즘 모음
-├─ docs/                   # 협업 가이드, Spec 문서 모음
+│  │     └─ endpoints/
+│  │        ├─ design.py
+│  │        └─ health.py
+│  ├─ algorithms/
+│  └─ schemas/
+├─ database/              # DB 파일 및 원천 데이터
+├─ docs/                  # 명세/가이드 문서
 │  └─ prompts/
 │  └─ strategy/
-├─ main.py                 # FastAPI 앱 엔트리포인트 
-├─ requirements.txt        # Python 패키지 목록
+├─ scripts/               # DB 구축/점검 스크립트
+├─ tests/                 # pytest 테스트 코드
+├─ main.py
+├─ requirements.txt
 ├─ README.md
 └─ .gitignore
 ```
@@ -91,6 +98,17 @@ python -m pytest -q
 - **Validation** : Pydantic
 - **API docs**: Swagger (OpenAPI)
 - **Server**: Uvicorn
+- **Database**: SQLite
+- **Bioinformatics**: pysam
+
+### Quality & Testing
+- **Linter/Formatter**: Ruff
+- **Type Checking**: Pyright
+- **Test**: pytest
+
+### Collaboration
+- **Commit Rule**: commitlint
+- **Git Hooks**: Husky
 
 ### AI Tools
 - OpenAI Codex, Google Gemini, GitHub Copilot
@@ -143,3 +161,8 @@ python -m pytest -q
     - DB 스키마/데이터 소스/설치 절차 문서(`docs/spec_database.md`) 추가
 - **AI 활용**
     - DB 구축 도움 : `docs/prompts/9주차/DB_setup.md` 참고
+
+### Week 10 (26.2.23 - 3.1)
+- **작업 내역** : [10주차 Commit](https://github.com/Seq-Lab/PrimerFlow-BE/pull/40)
+    - `health/db` 엔드포인트 신설: SQLite DB(`database/annotations.db`) 존재 여부, 읽기 권한 및 테이블 샘플 데이터 확인 로직 추가.
+    - API 탐색 개선: 루트(/) 경로 접속 시 문서 및 헬스 체크 엔드포인트 링크를 반환하도록 수정.
